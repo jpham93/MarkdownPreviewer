@@ -1,0 +1,156 @@
+/*Variables*/
+$displayBorder : 2px solid black;
+$mainBorderSize: 10px;
+$headerHeight: 150px;
+$displayMargin: 5px;
+$displayPadding: 5px;
+
+/*map*/
+$colors: (
+    deep-blue: #192A56,     /*to use: map-get($map: $colors, $key: deep-blue) */
+    sky-blue: #0A79DF,
+    baby-blue: #64B9FF,
+    light-blue: #487eb0,
+    purple-blue: #6a89cc,
+    gray: #99aaab,
+    dark-gray: #2f363f
+);
+
+$fontSize: (
+    title: 40px,
+    standard: 15px,
+    button: 14px
+);
+
+$fontStyle: (
+    a: Calibri,
+    b: Helvetica,
+    c: Arial,
+    d: Tahoma,
+    e: Geneva
+);
+
+
+
+/*SASS function*/
+@function color($colorName) {
+    @return map-get($map: $colors, $key: $colorName)    /*to access just use: color(deep-blue)*/
+}
+
+body {
+    position: absolute;
+    top: -4vh;
+
+    width:100vw;
+    height: 104vh;
+
+    font-size: map-get($map: $fontSize, $key: standard);
+}
+
+#header {
+    z-index: 10; /*have header pop out since it overlaps with display container*/
+    position:relative;
+
+    top: 0;
+    width: 100%;
+    height: $headerHeight;
+    background: color(deep-blue);
+
+    box-shadow: 10px 8px 16px 0 rgba(0,0,0,0.5), 0 6px 20px 0 rgba(0,0,0,0.5); /*box shadow for header banner*/
+
+    #title {
+        position: relative;
+        top: 20%;
+        text-align: center;
+        color: color(gray);
+
+        font-family: map-get($map: $fontStyle, $key: e);
+        font-size: map-get($map: $fontSize, $key: title)
+    }
+
+    .btn-group { /*styling of all four buttons*/
+        display: inline-block;  /*keeps elements from expanding the entire parent container*/
+        // border: $standardBorder;
+        position: absolute;
+        top: $headerHeight - 40px; /*subtract difference of header height 
+                                    to sit buttons at bottom of header*/
+
+        button {
+            margin: 2px;
+            background-color: color(purple-blue); 
+            border: none;
+            color: white;
+            padding: 9px 20px;
+            text-align: center;
+            font-size: map-get($map: $fontSize, $key: button);
+            font-family: map-get($map: $fontStyle, $key: e);
+        }
+
+        button:hover {
+            box-shadow: 0 8px 12px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+            background: color(dark-gray);
+        }
+
+        button:focus {
+            outline: none;
+        }
+    }
+
+    #editor-btn {
+        left: 5px;
+    }
+
+    #preview-btn { /*two buttons on the right side of the page*/
+        right: 5px; /*off set absolute position relative to header*/
+    }
+
+}
+
+
+#display-container {
+    // padding: 5px 30px;
+    display: flex;
+    // border: $displayBorder;
+    justify-content: space-evenly;
+
+    background: color(light-blue);
+
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    top : $headerHeight + 25px; /*keep top of container about the height of header*/
+
+    #editor {
+        width:45%;
+        margin: $displayBorder;
+        font-size: map-get($map: $fontSize, $key: standard);
+
+        // margin-right: $displayMargin;
+        padding: $displayPadding;
+
+        background: color(dark-gray);
+        color: white;
+        border: none;
+        font-family: map-get($map: $fontStyle, $key: d);
+
+        box-shadow: 10px 8px 16px 0 rgba(0,0,0,0.5), 0 6px 20px 0 rgba(0,0,0,0.5);
+    }
+
+    #editor:focus {
+        outline: none;
+    }
+    
+    #preview {
+        width: 45%;
+        margin: $displayBorder;
+        overflow-y: auto; /*makes container become scrollable*/
+
+        background: #ffffff;
+
+        // margin-left: $displayMargin;
+        padding: $displayPadding;
+        font-family: map-get($map: $fontStyle, $key: e);
+
+        box-shadow: 10px 8px 16px 0 rgba(0,0,0,0.5), 0 6px 20px 0 rgba(0,0,0,0.5);
+    }
+}
